@@ -10,7 +10,7 @@ contract ERC20Token {
     mapping(address => uint256) private balances;
     mapping(address => mapping(address => uint256)) private allowances;
 
-    // события из стандарта EIP-20
+    // Events from the EIP-20 standard
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);
 
@@ -24,12 +24,12 @@ contract ERC20Token {
         emit Transfer(address(0), msg.sender, totalSupply);
     }
 
-    // возвращает баланс аккаунта
+    // Returns the balance of a given account
     function balanceOf(address account) public view returns (uint256) {
         return balances[account];
     }
 
-    // перевод токенов
+    // Transfers tokens
     function transfer(address recipient, uint256 amount) public returns (bool) {
         require(recipient != address(0), "ERC20: transfer to the zero address");
         require(balances[msg.sender] >= amount, "ERC20: insufficient balance");
@@ -41,7 +41,7 @@ contract ERC20Token {
         return true;
     }
 
-    // утверждение разрешения на управление токенами
+    // Approves an allowance for token management
     function approve(address spender, uint256 amount) public returns (bool) {
         require(spender != address(0), "ERC20: approve to the zero address");
 
@@ -50,7 +50,7 @@ contract ERC20Token {
         return true;
     }
 
-    // перевод токенов через разрешение
+    // Transfers tokens using an allowance
     function transferFrom(address sender, address recipient, uint256 amount) public returns (bool) {
         require(sender != address(0), "ERC20: transfer from the zero address");
         require(recipient != address(0), "ERC20: transfer to the zero address");
@@ -65,12 +65,12 @@ contract ERC20Token {
         return true;
     }
 
-    // возвращает количество токенов, которое `spender` может тратить от имени `owner`
+    // Returns the amount of tokens `spender` is allowed to spend on behalf of `owner`
     function allowance(address owner, address spender) public view returns (uint256) {
         return allowances[owner][spender];
     }
 
-    // создание токенов (mint)
+    // Creates new tokens (minting)
     function mint(address account, uint256 amount) public {
         require(account != address(0), "ERC20: mint to the zero address");
 
@@ -80,7 +80,7 @@ contract ERC20Token {
         emit Transfer(address(0), account, amount);
     }
 
-    // сжигание токенов (burn)
+    // Burns tokens (destroying them)
     function burn(uint256 amount) public {
         require(balances[msg.sender] >= amount, "ERC20: burn amount exceeds balance");
 
